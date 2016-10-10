@@ -1,4 +1,4 @@
-package com.ksxkq.mvpexample;
+package com.ksxkq.mvpexample.login;
 
 import android.view.View;
 
@@ -17,15 +17,16 @@ import rx.schedulers.Schedulers;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
-    private LoginContract.View view;
+    private LoginContract.View mLoginView;
 
-    public LoginPresenter(LoginContract.View view) {
-        this.view = view;
+    public LoginPresenter(LoginContract.View loginView) {
+        mLoginView = loginView;
+        mLoginView.setPresenter(this);
     }
 
     @Override
     public void login() {
-        view.showLoading(View.VISIBLE);
+        mLoginView.showLoading(View.VISIBLE);
         Observable.create(new Observable.OnSubscribe<Object>() {
             @Override
             public void call(Subscriber<? super Object> subscriber) {
@@ -39,10 +40,10 @@ public class LoginPresenter implements LoginContract.Presenter {
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object o) {
-                        String name = view.getUsername();
-                        String pass = view.getPassword();
-                        view.loginSuccess();
-                        view.showLoading(View.GONE);
+                        String name = mLoginView.getUsername();
+                        String pass = mLoginView.getPassword();
+                        mLoginView.loginSuccess();
+                        mLoginView.showLoading(View.GONE);
                     }
                 });
     }

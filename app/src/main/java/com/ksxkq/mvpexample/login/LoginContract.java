@@ -1,4 +1,7 @@
-package com.ksxkq.mvpexample;
+package com.ksxkq.mvpexample.login;
+
+import com.ksxkq.mvpexample.BasePresenter;
+import com.ksxkq.mvpexample.BaseView;
 
 /**
  * OnePiece
@@ -7,7 +10,7 @@ package com.ksxkq.mvpexample;
 
 public interface LoginContract {
 
-    interface View {
+    interface View extends BaseView<Presenter> {
 
         String getUsername();
 
@@ -21,7 +24,7 @@ public interface LoginContract {
 
     }
 
-    interface Presenter {
+    interface Presenter extends BasePresenter {
 
         void login();
 

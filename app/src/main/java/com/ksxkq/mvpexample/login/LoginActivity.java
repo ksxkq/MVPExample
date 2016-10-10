@@ -1,4 +1,4 @@
-package com.ksxkq.mvpexample;
+package com.ksxkq.mvpexample.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.ksxkq.mvpexample.R;
 
 import static com.ksxkq.mvpexample.R.id.password_et;
 import static com.ksxkq.mvpexample.R.id.username_et;
@@ -19,7 +21,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     private ProgressBar mLoadingPb;
     private Button mLoginBtn;
 
-    private LoginPresenter loginPresenter;
+    private LoginContract.Presenter mLoginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,19 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         setContentView(R.layout.activity_main);
         initView();
 
-        loginPresenter = new LoginPresenter(this);
+        new LoginPresenter(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mLoginPresenter.subscribe();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mLoginPresenter.unsubscribe();
     }
 
     @Override
@@ -70,8 +84,13 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_btn:
-                loginPresenter.login();
+                mLoginPresenter.login();
                 break;
         }
+    }
+
+    @Override
+    public void setPresenter(LoginContract.Presenter presenter) {
+        this.mLoginPresenter = presenter;
     }
 }

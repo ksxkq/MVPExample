@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         setContentView(R.layout.activity_main);
         initView();
 
+        // 构造方法里面,会将 presenter 注入到 view
         new LoginPresenter(this);
     }
 

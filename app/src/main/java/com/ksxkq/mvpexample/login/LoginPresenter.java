@@ -47,4 +47,14 @@ public class LoginPresenter implements LoginContract.Presenter {
                     }
                 });
     }
+
+    @Override
+    public void subscribe() {
+        // TODO: 10/10/16 rxjava
+    }
+
+    @Override
+    public void unsubscribe() {
+        // TODO: 10/10/16 rxjava
+    }
 }
